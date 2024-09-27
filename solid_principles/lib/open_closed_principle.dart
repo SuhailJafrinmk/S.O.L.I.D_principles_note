@@ -16,27 +16,31 @@ class AreaCalculatorWithoutOCP {
   /// If a new shape needs to be added, this method must be modified.
   /// This violates the OCP as it requires modifying existing code for new functionality.
 
-  double getTotalAreaOfShapes(dynamic shape) {
-    if (shape is RectangleWithoutOCP) {
-      return shape.height * shape.width;
-    } else if (shape is CircleWithoutOCP) {
-      return 3.14 * shape.radius * shape.radius;
+  double getTotalAreaOfShapes(List<dynamic> shapes) {
+    //if we want to add an additional shape we have to write additinal checks which violates OCP
+    double totalArea=0.0;
+    for(var shape in shapes){
+      if(shape is RectangleWithoutOCP){
+        totalArea +=shape.getArea();
+      }else if(shape is CircleWithoutOCP){
+        totalArea +=shape.getArea();
+      }
     }
-    return 0.0;
+    return totalArea;
   }
 }
 
 class RectangleWithoutOCP {
   final double height;
   final double width;
-  
   RectangleWithoutOCP({required this.height, required this.width});
+  double getArea() => height * width;
 }
 
 class CircleWithoutOCP {
   final double radius;
-  
   CircleWithoutOCP({required this.radius});
+  double getArea() => 3.14 * radius * radius;
 }
 
 void main() {
